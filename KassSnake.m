@@ -1,7 +1,7 @@
 function [cellArray] = KassSnake(points, img, alpha, beta, delta, sigma, maxIt, rs)
 
-    x = points(1,:)';
-    y = points(2,:)';
+x = points(1,:)';
+y = points(2,:)';
 
 % Thresholds used in terminating the algorithm
 stopThresh = 0.0008;
