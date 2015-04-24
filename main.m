@@ -1,20 +1,4 @@
-%%
-% This is the main file for the snake program. This
-% file contains most of all the parameters and
-% threshold used in the two snake algorithm.
-% type - If this has value 'Kass' the Kass et al. snake
-% algorithm will be invoked. If the value is 'greedy'
-% the greedy snake algorithm will be invoked.
-% input - Can take the values 'user' and 'circle'. This
-% decides whether to let the user input the snake control
-% points or use the default circle.
-% ssc - Can either be 'on' or 'off'. This turns scale space
-% continuation on/off.
-% Visual output shoving how the snake evolves.
-% Nikolas Petteri Tiilikainen
-% Department of Computer Science
-% University of Copenhagen (DIKU)
-% 2007
+
 function main(type, input, ssc)
 close all
 
@@ -22,7 +6,7 @@ close all
 pathName = './';
 
 % Define name of image file
-imgName = 'square.png';
+imgName = 'bluestar.jpg';
 
 % Load the image file
 originalImg = imread([pathName imgName]);
@@ -102,7 +86,7 @@ if strcmpi(type, 'Kass')
     % maxIt: Defines the maximum number of snake iterations
     % rs:    Controls whether to have resmapling on or off
     
-    alpha = 0.05; beta = 0.0005; delta = 1; sigma = 3; maxIt = 8000; rs = 'on';
+    alpha = 0.05; beta = 0.0005; delta = 1; sigma = 3; maxIt = 18000; rs = 'on';
     
     %alpha = 0.035;
     % Use scale space continuation if ssc = on
@@ -162,6 +146,7 @@ elseif strcmpi(type, 'greedy')
     fprintf('Scale space continuation: %s \n', ssc);
 end
 % Show snake evolution
+figure
 showSnake(C, originalImg, beta);
 clear all
 end

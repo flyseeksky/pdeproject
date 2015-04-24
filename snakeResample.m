@@ -19,6 +19,18 @@ end
 % needs to be inserted
 insertAt = find(dist >= 1.3*avgDist);
 
+% beta = nan(1,n);
+% x = points(1,:);
+% y = points(2,:);
+% for i = 1:n
+%     [modI, modIPlus, modIMinus] = getModulo(i,n);
+%     k1 = (y(modIPlus) - y(modI) + .1) / (x(modIPlus) - x(modI) + .1);
+%     k0 = (y(modI) - y(modIMinus) + .1) / (x(modI) - x(modIMinus) + .1);
+%     beta(modI) = 1/(1 + 100*abs( k1 - k0 )^2);
+% end
+% index = find( beta > 4*mean(beta) );
+% insertAt = [insertAt; index'];
+
 % Number of new points that should be added
 add = length(insertAt);
 
