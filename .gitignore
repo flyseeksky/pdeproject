@@ -3,3 +3,6 @@
 *.svg
 *.jpeg
 *.gif
+*.fig
+*.mat
+*.pdf

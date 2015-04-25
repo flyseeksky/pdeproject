@@ -45,36 +45,30 @@ if length(corners) < N
 end
 
 % buid N gaussian mixture distribution
-corner = corners.selectStrongest(N);
-p = corner.Metric ./ sum( corner.Metric );
-pts = corner.Location;
-s = 100;
-sigma = s*repmat([1 0; 0 1],1,1,N);
-gm = gmdistribution(pts, sigma, p);
-[R,C] = size(img);
-[X,Y] = meshgrid(1:C, 1:R);
-gmdist = pdf(gm,[X(:), Y(:)]);
-gmdist = reshape(gmdist,R,C);
-gmdist = gmdist / max(gmdist(:));
-imshow(abs(gmdist-1))
-gmdist = abs(gmdist - 1)*0.05 + .0001;
-display(gm)
-% build a beta matrix
-% beta = nan(1,n);
+% corner = corners.selectStrongest(N);
+% p = corner.Metric ./ sum( corner.Metric );
+% pts = corner.Location;
+% s = 100;
+% sigma = s*repmat([1 0; 0 1],1,1,N);
+% gm = gmdistribution(pts, sigma, p);
+% [R,C] = size(img);
+% [X,Y] = meshgrid(1:C, 1:R);
+% gmdist = pdf(gm,[X(:), Y(:)]);
+% gmdist = reshape(gmdist,R,C);
+% gmdist = gmdist / max(gmdist(:));
+% imshow(abs(gmdist-1))
+% gmdist = abs(gmdist - 1)*0.05 + .0001;
+% display(gm)
+% 
+% xpt = round(x);
+% ypt = round(y);
 % for i = 1:n
-%     [modI, modIPlus, modIMinus] = getModulo(i,n);
-%     k1 = (y(modIPlus) - y(modI) + eps) / (x(modIPlus) - x(modI) + eps);
-%     k0 = (y(modI) - y(modIMinus) + eps) / (x(modI) - x(modIMinus) + eps);
-%     beta(modI) = 0.001/(1 + 100*abs( k1 - k0 )^2);
+%     points(4,i) = gmdist(ypt(i),xpt(i));
+%     points(3,i) = points(4,i);
 % end
-xpt = round(x);
-ypt = round(y);
-for i = 1:n
-    points(4,i) = gmdist(ypt(i),xpt(i));
-    points(3,i) = points(4,i);
-end
 
-% points(4,:) = beta;
+points(3,:) = alpha;
+points(4,:) = beta;
 
 h = 1;
 

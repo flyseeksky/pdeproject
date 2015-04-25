@@ -8,10 +8,10 @@ In the domain of image processing, object segmentation is a essential task. Many
 1. image segmentation
 2. disadvantages of common edge detector
 3. active contour: advantage
-4. Problem: not able to capture corners with common $$ \beta $$.
+4. Problem: not able to capture corners with common $$ \beta $$ as well as keep curve continuous and smooth
 5. Idea: spatially dependent $$ \beta $$ capture corners
-6. Mixture gaussian distribution
 
 
 ## Problem Formulation
 
+1. 

@@ -86,7 +86,7 @@ if strcmpi(type, 'Kass')
     % maxIt: Defines the maximum number of snake iterations
     % rs:    Controls whether to have resmapling on or off
     
-    alpha = 0.05; beta = 0.0005; delta = 1; sigma = 3; maxIt = 18000; rs = 'on';
+    alpha = 0.05; beta = 0.0005; delta = 1; sigma = 3; maxIt = 16000; rs = 'on';
     
     %alpha = 0.035;
     % Use scale space continuation if ssc = on
