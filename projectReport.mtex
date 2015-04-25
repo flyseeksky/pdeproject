@@ -1,9 +1,20 @@
 # ECE6560 Final Project Report
--> Meng Ma <-
+
+*Meng Ma, GTID: 902889403*
 
 ## Problem statement
 
-In the domain of image processing, object segmentation is a essential task. Many techniques can be employed to solve this problem,
+In the domain of image processing, object segmentation, or contour extraction, is an non-trivial task, which serves as a foundation for more complex computer vision algorithms. Though it seems to be an easy task for human vision, it turns out to be a really difficult objective for computer.
+
+Many techniques can be employed to solve this problem. For example, even the simple Sobel edge detector can give a somewhat good result. A Canny edge detector can give a better result. However, these low level operators are far from satisfactory. Because of their intrinsic flaws, simple edge detectors have a hard time when the object has a complex structure. For instance, since they only care about local properties of image, there can be discontinuity and error edge present, making it hard to tell which part is the real edge.
+
+Snake method, originally published by Kass el. in 1988, tries to effectively capture the boundary as well as avoid the problems of discontinuity and error edge. The very basic idea of snake can be viewed as a minimization problem, where the quantity it tries to minimize consist of edge information and curve regularization. Edge information tries to drive the curve towards object edge while curve regularization tries to keep curve continuous and smooth. 
+
+Snake method proves to be very successful, and has been used in many areas since proposed. But with careful inspection, one could find that edge-based snake works not very well when sharp corners present. This is no beyond expectation it tries to keep curve continuous and smooth by imposing penalties on any discontinuity and curvature. With these penalties, the final curve will surely avoid any sharp corners since they would bring a big penalty, though this may lose some kind of fidelity.
+
+In this project, I try to use a spatially dependent weight to solve this problem. My idea is that since the penalty term controls the smoothness of curve, then if sharp corners should be allowed, their penalties should not be too large. While in other parts of the picture with no corners, penalties should be the same with usual. This leads to varying weight according to curve locations. 
+
+To achieve the objective, possible corners should be located first. Then the penalty weights should be set very small relative to normal ones. Thus even though sharp corners exist, their penalty would be roughly the same with ordinary points, which means these corners could survive in the final curve.
 
 1. image segmentation
 2. disadvantages of common edge detector
@@ -14,4 +25,53 @@ In the domain of image processing, object segmentation is a essential task. Many
 
 ## Problem Formulation
 
-1. 
+The original snake method uses different forces as energy function to drive the curve to evolve to the right location. Using a parameterization $$ C = C(p) $$ , the energy function can expressed as 
+
+$$ \displaystyle E(C) = \int_{0}^{1} E_{int}(p) + E_{img}(p) + E_{con}(p) \,\mathrm{d}p   $$
+
+where $$ E_{int}(p) $$ represents internal energy of curve, which drive the curve to evolving towards a more smooth one; $$ E_{image}(p) $$ is the image force, which drives the curve to the possible edge; $$ E_{cont}(p) $$ refers to external constrain force, which is often used to push curve away from undesired local minimum. Typically, only internal force and image force are used.
+
+The internal force can be further decomposed as 
+
+$$ \displaystyle E_{int}(p) = \frac{1}{2} \left(\alpha(p) C_p(p) + \beta(p) C_{pp}(p) \right) $$
+
+$$ \alpha(p) $$ controls the first order term, a measure of elasticity, and $$ \beta(p) $$ controls the second order term, a measurement of curvature. Their relative effectiveness are controlled by weights $$ \alpha(p) $$ and $$ \beta(p) $$ . Usually, to to simplify the question, $$ \alpha(p) $$ and $$ \beta(p) $$ are set to be constant. There two terms in all forms the regularization of curve. 
+
+The image force $$ E_{img} $$ is used to drive the curve to evolve towards possible edges. When the curve is located the real object edge, this term tends to be very small. A typical image energy can be defined as 
+
+$$ E_{img} = - \| \nabla I(x,y) \|^2 $$ 
+
+where $$ I(x,y) $$ is the image value at point $$ (x,y) $$ , $$ \nabla $$ is gradient operator. With this definition, the penalty will be very small where the gradient is large.
+
+Then the energy function can written as 
+
+$$ \displaystyle E(C) = \int_{0}^{1} \alpha C_p(p) + \beta C_{pp}(p) - \| \nabla I(x,y) \|^2 \,\mathrm{d}p $$
+
+
+
+1. Normal active contour: common $$ \beta $$ ; consequence: same penalty everywhere, that's why corners can't preserve;
+2. Idea: use spatially dependent $$ \beta $$ to relax penalty where there may be a corner
+3. But also, need to consider not to effect other parts, as well as different likelihood to be corners into consideration.
+4. Gaussian mixture model to model the corners.
+
+## PDE formulation
+
+1. Energy function
+
+$$ \displaystyle E(C) = \int_{0}^{1} E_{int}(s) + E_{image}(s) + E_{con}(s) \,\mathrm{d}x   $$
+
+where .... derivation of PDE
+
+## Disretized PDE
+
+basically the derivation in the paper "comparative study of snakes"
+
+## Experiment Result
+
+some pictures for different pictures
+some pictures for different noise level
+
+## Conclusion
+
+edge-based not suitable for capture corners
+perhaps region based is better
